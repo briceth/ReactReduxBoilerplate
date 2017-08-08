@@ -1,3 +1,14 @@
 .hello {
   color: red;
 }
+
+.emoticonsList {
+  display: flex;
+  flex-wrap: wrap;
+}
+.emoticon {
+  margin-bottom: 3%;
+  margin-right: 1%;
+  border: 1px solid grey;
+  padding: 45px;
+}

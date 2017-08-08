@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Loader from '../utils/Loader';
 
 class App extends Component {
   constructor() {
     super()
 
     this.state = {
+      loading: true,
       emoticons: []
     }
   }
@@ -21,16 +23,21 @@ class App extends Component {
 
   _renderEmoticons() {
     return this.state.emoticons.map((emoticon, index) => {
-    return (
-      <div key={index}>
-        <div>id:{emoticon.id}</div>
-        <div>{emoticon.face}</div>
-        <div>{emoticon.date}</div>
-        <div>price:{emoticon.price}</div>
-        <div>size:{emoticon.size}</div>
-      </div>
+      return (
+        <div key={index} className="emoticon">
+          <div>{emoticon.face}</div>
+          <div>id:{emoticon.id}</div>
+          <div>{emoticon.date}</div>
+          <div>price:{emoticon.price}</div>
+          <div>size:{emoticon.size}</div>
+        </div>
       )
     })
+  }
+
+  _renderLoading() {
+    //return <Loader />
+    return <div>Loading....</div>
   }
 
   render() {
@@ -38,9 +45,10 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
         </div>
-          <ul>
-            { this._renderEmoticons() }
-          </ul>
+          <div className="emoticonsList">
+            <Loader />
+            { this.state.loading ? this._renderLoading() : this._renderEmoticons() }
+          </div>
       </div>
     );
   }
