@@ -4,6 +4,8 @@ import Loading from '../utils/Loader'
 import Filter from './Filter'
 import update from 'react-addons-update'
 import Waypoint from 'react-waypoint'
+import Emoticon from './Emoticon'
+import { _calculateDateDiff, _formatDateAndPrice } from '../utils/Helpers'
 
 class App extends Component {
   constructor() {
@@ -13,51 +15,10 @@ class App extends Component {
 
     this.state = {
       loading: true,
-      emoticons: []
+      emoticons: [],
+      noMoreData: false
     }
   }
-
-
-  _calculateDateDiff(notFormatedDate) {
-    var currentDate = new Date()
-    var dateProduct = new Date(notFormatedDate)
-
-    var diff = {}
-    var tmp = currentDate - dateProduct
-    tmp = Math.floor(tmp/1000)            // Nombre de secondes entre les 2 dates
-    diff.sec = tmp % 60                    // Extraction du nombre de secondes
-
-    tmp = Math.floor((tmp-diff.sec)/60)    // Nombre de minutes (partie entière)
-    diff.min = tmp % 60                    // Extraction du nombre de minutes
-
-    tmp = Math.floor((tmp-diff.min)/60)    // Nombre d'heures (entières)
-    diff.hour = tmp % 24                   // Extraction du nombre d'heures
-
-    tmp = Math.floor((tmp-diff.hour)/24)   // Nombre de jours restants
-    diff.day = tmp
-
-    if (diff.day > 6) {
-      return dateProduct
-    } else {
-      return diff
-    }
-  }
-
-  _formatDateAndPrice(selectAllprices) {
-    return selectAllprices.map(element => {
-      const formatedPrice = '$' + element.price.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-
-      let totalDate = []
-      totalDate.push(this._calculateDateDiff(element.date))
-
-      const newPriceAndDate = update(element, {
-        price: { $set: formatedPrice },
-        date: { $set: totalDate }
-      })
-      return newPriceAndDate;
-    })
-  }
-
 
   componentDidMount() {
     axios.get(`http://localhost:8000/api/products?limit=29`)
@@ -65,13 +26,12 @@ class App extends Component {
       const ndjson = response.data.split('\n').slice(0, -1)
       const json = ndjson.map((item, i) => JSON.parse(item))
 
-      const formatDateAndPrice = this._formatDateAndPrice(json)
+      const formatDateAndPrice = _formatDateAndPrice(json)
       this.setState({ emoticons: formatDateAndPrice, loading: false })
     })
   }
 
   _manageDate(emoticon) {
-    console.log(emoticon.date[0])
     if(emoticon.date[0].day > 0) {
       return <div>{emoticon.date[0].day} days ago</div>
     } else if (emoticon.date[0].day < 0) {
@@ -83,20 +43,11 @@ class App extends Component {
   }
 
   _renderEmoticons() {
-    return this.state.emoticons.map((emoticon, index) => {
-      return (
-          <div key={index} className="emoticon">
-            <div>{emoticon.face}</div>
-            {/* <div>id:{emoticon.id}</div> */}
-
-            { this._manageDate(emoticon) }
-
-            <div>price:{emoticon.price}</div>
-            <div>size:{emoticon.size}</div>
-          </div>
-      )
-    })
-  }
+    const emoticons = this.state.emoticons
+      return emoticons.map((emoticon, index) => {
+        return <Emoticon emoticon={emoticon} index={index} manageDate={this._manageDate}/>
+      })
+    }
 
   _callback(filter) {
     axios.get(`http://localhost:8000/api/products?sort=${filter}`)
@@ -114,7 +65,12 @@ class App extends Component {
       const ndjson = response.data.split('\n').slice(0, -1)
       const json = ndjson.map((item, i) => JSON.parse(item))
 
-      const formatDateAndPrice = this._formatDateAndPrice(json)
+      if (!Array.isArray(json) || !json.length) {
+        // array does not exist, is not an array, or is empty
+        this.setState({ noMoreData: true })
+      }
+
+      const formatDateAndPrice = _formatDateAndPrice(json)
 
       const currentEmoticons = this.state.emoticons
       for (let i = 0; i < formatDateAndPrice.length; i++) {
@@ -127,21 +83,21 @@ class App extends Component {
     })
   }
 
-  _renderWaypoint() {
-    return (
-      <Waypoint
-        onEnter={this._handleWaypointEnter}
-      />
-    );
-  }
 
+  _renderLoadingOrEndOfCatalogue() {
+    if(this.state.noMoreData) {
+      return <div>~ end of catalogue ~</div>
+    } else {
+      return <Loading type='bars' color='#444' />
+    }
+  }
 
 
   render() {
     if (this.state.loading) {
       return (
         <div className='loading'>
-          <Loading />
+          <Loading type='bars' color='#444' />
         </div>
       )
     }
@@ -152,11 +108,16 @@ class App extends Component {
             <Filter callbackFromParent={this._callback}/>
         </div>
         <div className="emoticonsList">
+
           { this._renderEmoticons() }
-          { this._renderWaypoint() }
+
+          <Waypoint onEnter={this._handleWaypointEnter} />
+
         </div>
         <div className='loading'>
-          <Loading />
+
+          { this._renderLoadingOrEndOfCatalogue() }
+
         </div>
       </div>
     );
