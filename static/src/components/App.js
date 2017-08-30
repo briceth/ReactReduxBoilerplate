@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import Loader from '../utils/Loader'
+import Loading from '../utils/Loader'
 import Filter from './Filter'
 import update from 'react-addons-update'
 import Waypoint from 'react-waypoint'
@@ -36,7 +36,11 @@ class App extends Component {
     tmp = Math.floor((tmp-diff.hour)/24)   // Nombre de jours restants
     diff.day = tmp
 
-    return diff
+    if (diff.day > 6) {
+      return dateProduct
+    } else {
+      return diff
+    }
   }
 
   _formatDateAndPrice(selectAllprices) {
@@ -52,7 +56,6 @@ class App extends Component {
       })
       return newPriceAndDate;
     })
-
   }
 
 
@@ -67,14 +70,27 @@ class App extends Component {
     })
   }
 
+  _manageDate(emoticon) {
+    console.log(emoticon.date[0])
+    if(emoticon.date[0].day > 0) {
+      return <div>{emoticon.date[0].day} days ago</div>
+    } else if (emoticon.date[0].day < 0) {
+     return <div>{emoticon.date[0].hour} hours ago</div>
+   } else {
+     const entireDate = emoticon.date[0].toString().substr(0,15)
+     return <div>{ entireDate }</div>
+   }
+  }
 
   _renderEmoticons() {
     return this.state.emoticons.map((emoticon, index) => {
       return (
           <div key={index} className="emoticon">
             <div>{emoticon.face}</div>
-            <div>id:{emoticon.id}</div>
-            <div>il y a {emoticon.date[0].day} jours,{emoticon.date[0].hour} heures et {emoticon.date[0].min} minutes</div>
+            {/* <div>id:{emoticon.id}</div> */}
+
+            { this._manageDate(emoticon) }
+
             <div>price:{emoticon.price}</div>
             <div>size:{emoticon.size}</div>
           </div>
@@ -100,32 +116,34 @@ class App extends Component {
 
       const formatDateAndPrice = this._formatDateAndPrice(json)
 
-      const currentEmoticons = this.state.emoticons;
+      const currentEmoticons = this.state.emoticons
       for (let i = 0; i < formatDateAndPrice.length; i++) {
-        currentEmoticons.push(formatDateAndPrice[i]);
+        currentEmoticons.push(formatDateAndPrice[i])
       }
-      
-      this.setState({emoticons: currentItems})
+
+      this.setState({ emoticons: currentEmoticons })
 
       skip += 30
     })
   }
 
   _renderWaypoint() {
-    //if (!this.state.Loading) {
-        return (
-          <Waypoint
-            onEnter={this._handleWaypointEnter}
-          />
-        );
-      //}
+    return (
+      <Waypoint
+        onEnter={this._handleWaypointEnter}
+      />
+    );
   }
 
 
 
   render() {
     if (this.state.loading) {
-      return <Loader />
+      return (
+        <div className='loading'>
+          <Loading />
+        </div>
+      )
     }
 
     return (
@@ -136,7 +154,9 @@ class App extends Component {
         <div className="emoticonsList">
           { this._renderEmoticons() }
           { this._renderWaypoint() }
-          Loading more items....
+        </div>
+        <div className='loading'>
+          <Loading />
         </div>
       </div>
     );

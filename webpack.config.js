@@ -8,7 +8,8 @@ module.exports = {
   },
   devtool: 'inline-source-map',
   devServer: {
-     contentBase: './static/dist'
+     contentBase: './static/dist',
+     port: 8008
    },
   module: {
      rules: [
