@@ -1,3 +1,4 @@
+import React, { Component } from 'react'
 import update from 'react-addons-update'
 
 export function _calculateDateDiff(notFormatedDate) {
@@ -41,4 +42,13 @@ export function _formatDateAndPrice(selectAllprices) {
   })
 }
 
-// export default _calculateDateDiff
+export function _manageDate(emoticon) {
+  if(emoticon.date[0].day > 0) {
+    return <div>{emoticon.date[0].day} days ago</div>
+  } else if (emoticon.date[0].day < 0) {
+   return <div>{emoticon.date[0].hour} hours ago</div>
+ } else {
+   const entireDate = emoticon.date[0].toString().substr(0,15)
+   return entireDate.split(' ').join('/')
+ }
+}

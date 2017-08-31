@@ -10,7 +10,6 @@ class Filter extends Component {
     this.handleChange = this.handleChange.bind(this)
   }
   handleChange(val) {
-    //event.preventDefault();
     this.props.callbackFromParent(val)
     console.log(val)
   }

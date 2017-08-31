@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 
-const Emoticon = ({emoticon, index, manageDate}) => {
+const Emoticon = ({ emoticon, index, manageDate }) => {
   return (
     <div key={index} className="emoticon">
       <div>{emoticon.face}</div>
-      <div>id:{emoticon.id.substr(0,10)}...</div>
+      <div>id: {emoticon.id.substr(0,10)}...</div>
 
-      { manageDate(emoticon) }
+      <div>{ manageDate(emoticon) }</div>
 
-      <div>price:{emoticon.price}</div>
-      <div>size:{emoticon.size}</div>
+      <div>price: {emoticon.price}</div>
+      <div>size: {emoticon.size} px</div>
     </div>
   )
 }
