@@ -1,16 +1,19 @@
 import React, { Component } from 'react'
+import { Emoticons } from '../components/emoticon'
+import { Loading } from '../components/loading'
+import { Filter } from '../components/Filter'
+import { Container } from '../components/container'
 import axios from 'axios'
-import Loading from '../utils/Loader'
-import Filter from './Filter'
+import LoadingSquare from '../utils/Loader'
+import FilterInput from './FilterInput'
 import update from 'react-addons-update'
 import Waypoint from 'react-waypoint'
 import Emoticon from './Emoticon'
 import { _calculateDateDiff, _formatDateAndPrice, _manageDate } from '../utils/Helpers'
 
-class EmoticonList extends Component {
+export default class EmoticonList extends Component {
   constructor() {
     super()
-    this._filter = this._filter.bind(this)
     this._handleWaypointEnter = this._handleWaypointEnter.bind(this)
 
     this.state = {
@@ -35,18 +38,9 @@ class EmoticonList extends Component {
   _renderEmoticons() {
     const emoticons = this.state.emoticons
       return emoticons.map((emoticon, index) => {
-        return <Emoticon emoticon={emoticon} index={index} manageDate={_manageDate}/>
+        return <Emoticon emoticon={emoticon} key={index} manageDate={_manageDate}/>
       })
     }
-
-  _filter(filterCategory) {
-    axios.get(`http://localhost:8000/api/products?sort=${filterCategory}`)
-    .then((response) => {
-      const ndjson = response.data.split('\n').slice(0, -1)
-      const json = ndjson.map((item, i) => JSON.parse(item))
-      this.setState({ emoticons: json })
-    })
-  }
 
   _handleWaypointEnter() {
     const { skip } = this.state
@@ -65,12 +59,9 @@ class EmoticonList extends Component {
       const currentEmoticons = this.state.emoticons
       for (let i = 0; i < formatDateAndPrice.length; i++) {
         currentEmoticons.push(formatDateAndPrice[i])
-        //Object.assign({}, currentEmoticons, formatDateAndPrice[i])
       }
 
-      this.setState({ emoticons: currentEmoticons,
-                      skip: skip + 30 })
-
+      this.setState({ emoticons: currentEmoticons, skip: skip + 30 })
     })
   }
 
@@ -79,7 +70,7 @@ class EmoticonList extends Component {
     if(this.state.noMoreData) {
       return <div>~ end of catalogue ~</div>
     } else {
-      return <Loading type='bars' color='#444' />
+      return <LoadingSquare type='bars' color='#444' />
     }
   }
 
@@ -87,37 +78,25 @@ class EmoticonList extends Component {
   render() {
     if (this.state.loading) {
       return (
-        <div className='loading'>
-          <Loading type='bars' color='#444' />
-        </div>
+        <Loading>
+          <LoadingSquare type='bars' color='#444' />
+        </Loading>
       )
     }
 
     return (
-      <div className="App">
-        <div className="App-header">
-
-            <Filter callbackFromParent={this._filter}/>
-
-        </div>
-        <div className="emoticonsList">
-
+      <Container>
+        <Emoticons>
           { this._renderEmoticons() }
-
           <Waypoint
             onEnter={this._handleWaypointEnter}
             onLeave={this._handleWaypointEnter}
            />
-
-        </div>
-        <div className='loading'>
-
+        </Emoticons>
+        <Loading>
           { this._renderLoadingOrEndOfCatalogue() }
-
-        </div>
-      </div>
+        </Loading>
+      </Container>
     );
   }
 }
-
-export default EmoticonList;
