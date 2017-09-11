@@ -4,4 +4,5 @@ import CSS from '../globales/css_var';
 export const Container = styled.div`
   max-width: ${CSS.containerWidth}px;
   margin: auto;
+  padding: 15px 5px;
 `
