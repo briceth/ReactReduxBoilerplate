@@ -10,15 +10,17 @@ export const Emoticons = styled.div`
   justify-content: space-around;
 `
 export const EmoticonItem = styled.div`
-  border-radius: 5px;
+  border-radius: 3px;
   margin-top: 5%;
-  border: 1px solid #f5f5f5;
-  min-width: 586px;
-  min-height: 221px;
+  min-width: 450px;
+  min-height: 200px;
   display: flex;
   flex-direction: row;
+  background: #00d2ff;
+  background: -webkit-linear-gradient(to right,#3a7bd5,#00d2ff);
+  background: linear-gradient(to right,#3a7bd5,#00d2ff);
+
   box-shadow: ${CSS.boxShadow1};
-  background-color: #c2e0ff;
   &:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
@@ -30,38 +32,71 @@ export const EmoticonFaceWrapper = styled.div`
 `
 export const EmoticonDetails = styled.div`
   flex: 1 1 60%;
-  background-color: #fcfcfc;
   position: relative;
+  color: #3a7bd5;
+  background-color: white;
+  top: -15px;
+  right: -10px;
+  box-shadow: -5px 5px 15px #397dd6;
+  border-radius: 3px;
+  transform: translateY(25%);
+  -webkit-transition: 1.2s ease-in-out;
+  -moz-transition: 1.2s ease-in-out;
+  -o-transition: 1.2s ease-in-out;
+
+  &:hover {
+    box-shadow: -5px 5px 20px 3px rgba(2, 69, 163, 0.4);
+  }
+
+  ${props => props.enter && `transform: translateY(0%);`}
 `
-export const EmoticonFace = styled.div`
+export const EmoticonFace = styled.p`
   font-size: ${props => props.size}px;
-  color: #007eff;
+  color: white;
+  text-shadow: 2px 2px #3a7bd5;
+}
 `
 
-export const EmoticonId = styled.div`
+export const EmoticonId = styled.p`
   position: absolute;
   bottom: 0;
-  left: 0;
-`
-
-export const EmoticonDate = styled.div`
-position: absolute;
-  bottom: 0;
-  right: 0;
-`
-
-export const EmoticonPrice = styled.div`
-  position: absolute;
-  top: 26px;
   left: 28px;
-  background-color: #e74c3c;
-  padding: 10px;
-  border-radius: 5px;
-  color: wheat;
+  font-weight: 100;
+  font-size: 14px;
+  border-bottom: 1px solid;
+  border-image: linear-gradient(135deg, red, blue) 1 1;
 `
 
-export const EmoticonSize = styled.div`
+export const EmoticonDate = styled.p`
+  position: absolute;
+  bottom: 0px;
+  right: 20px;
+  font-weight: 100;
+  font-size: 14px;
+`
+
+export const EmoticonPrice = styled.p`
+  position: absolute;
+  top: 0px;
+  left: 28px;
+  font-size: 20px;
+  font-weight: bolder;
+  border: 1px solid;
+  border-radius: 2px;
+  padding: 0 5px;
+  border-image: linear-gradient(135deg, red, blue) 1 1;
+  background: -webkit-linear-gradient(135deg,red,blue);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+`
+
+export const EmoticonSize = styled.p`
   position: absolute;
   top: 0;
-  right: 0;
+  right: 20px;
+  border: 1px solid #397dd6;
+  padding: 0 10px;
+  border-radius: 2px;
+  font-weight: 100;
+  border-image: linear-gradient(135deg, red, blue) 1 1;
 `

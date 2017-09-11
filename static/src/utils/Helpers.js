@@ -44,9 +44,9 @@ export function _formatDateAndPrice(selectAllprices) {
 
 export function _manageDate(emoticon) {
   if(emoticon.date[0].day > 0) {
-    return <div>{emoticon.date[0].day} days ago</div>
+    return <p>{emoticon.date[0].day} days ago</p>
   } else if (emoticon.date[0].day < 0) {
-   return <div>{emoticon.date[0].hour} hours ago</div>
+   return <p>{emoticon.date[0].hour} hours ago</p>
  } else {
    const entireDate = emoticon.date[0].toString().substr(0,15)
    return entireDate.split(' ').join('/')

@@ -39,9 +39,11 @@
     "styled-components": "^2.1.2"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-styled-components": "^1.2.0",
     "babel-preset-airbnb": "^2.4.0",
+    "babel-preset-flow": "^6.23.0",
     "css-loader": "^0.28.4",
     "react-content-loader": "^1.4.0",
     "style-loader": "^0.18.2",

@@ -1,6 +1,6 @@
 const CSS = {
   padding: 15,
-  containerWidth: 900,
+  containerWidth: 1000,
   titleFontFamily: 'Titillium Web',
   baseFontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
   black: 'rgba(0,0,0, .8)',

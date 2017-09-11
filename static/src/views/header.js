@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { HeaderWrapper, HeaderContent } from '../components/header'
 import FilterInput from './FilterInput'
-import { Filter } from '../components/Filter'
+import { Filter } from '../components/filter'
+import { Container } from '../components/container'
 
 export default class Header extends Component {
   constructor() {
@@ -20,15 +21,17 @@ export default class Header extends Component {
   render() {
     return (
       <HeaderWrapper>
-        <HeaderContent>
-        <h1>Discount Ascii Warehouse</h1>
+        <Container>
+          <HeaderContent>
+            <h1>Discount Ascii Warehouse</h1>
 
-        <p>Here you're sure to find a bargain on some of the finest ascii available to purchase. Be sure to peruse our selection of ascii faces in an exciting range of sizes and prices.</p>
+            <p>Here you're sure to find a bargain on some of the finest ascii available to purchase. Be sure to peruse our selection of ascii faces in an exciting range of sizes and prices.</p>
+          </HeaderContent>
 
-        <Filter>
-          <FilterInput callbackFromParent={this.filter.bind(this)}/>
-        </Filter>
-      </HeaderContent>
+            <Filter>
+              <FilterInput callbackFromParent={this.filter.bind(this)}/>
+            </Filter>
+        </Container>
       </HeaderWrapper>
     )
   }

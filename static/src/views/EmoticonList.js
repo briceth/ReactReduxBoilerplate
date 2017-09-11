@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Emoticons } from '../components/emoticon'
 import { Loading } from '../components/loading'
-import { Filter } from '../components/Filter'
+import { Filter } from '../components/filter'
 import { Container } from '../components/container'
 import axios from 'axios'
 import LoadingSquare from '../utils/Loader'
