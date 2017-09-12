@@ -1,5 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { createStore, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import reducers from './reducers'
+
+const createStoreWithMiddleware = createStore(reducers, applyMiddleware(thunk))
+
 import { injectGlobal } from 'styled-components';
 
 injectGlobal`
@@ -39,4 +46,9 @@ injectGlobal`
 
 import App from './views/App';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <Provider store={createStoreWithMiddleware}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);

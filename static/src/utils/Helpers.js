@@ -28,7 +28,8 @@ export function _calculateDateDiff(notFormatedDate) {
 
 
 export function _formatDateAndPrice(selectAllprices) {
-  return selectAllprices.map(element => {
+  let selectAllpricesArray = selectAllprices.payload
+  return selectAllpricesArray.map(element => {
     const formatedPrice = '$' + element.price.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
 
     let totalDate = []
@@ -44,9 +45,11 @@ export function _formatDateAndPrice(selectAllprices) {
 
 export function _manageDate(emoticon) {
   if(emoticon.date[0].day > 0) {
-    return <p>{emoticon.date[0].day} days ago</p>
+    let moreThan1Day = emoticon.date[0].day + " days ago"
+    return moreThan1Day
   } else if (emoticon.date[0].day < 0) {
-   return <p>{emoticon.date[0].hour} hours ago</p>
+    let lessThan1Day = emoticon.date[0].day = " hours ago"
+    return lessThan1Day
  } else {
    const entireDate = emoticon.date[0].toString().substr(0,15)
    return entireDate.split(' ').join('/')
