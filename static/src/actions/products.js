@@ -3,11 +3,7 @@ import update from 'react-addons-update'
 import { FETCH_PRODUCTS, FETCH_MORE_PRODUCTS, NO_MORE_DATA,
   FORMAT_DATA, FILTER_INPUT_SEARCH, INCREASE_SKIP } from './types'
 
-// export function fetchApi(skip: string) {
-//   return axios.get(`http://localhost:8000/api/products?limit=30&skip=${skip}`)
-// }
-
-export function _calculateDateDiff(notFormatedDate) {
+export function calculateDateDiff(notFormatedDate) {
   var currentDate = new Date()
   var dateProduct = new Date(notFormatedDate)
 
@@ -37,21 +33,20 @@ export function _calculateDateDiff(notFormatedDate) {
   }
 }
 
-export function _formatDateAndPrice(selectAllprices) {
+export function formatDateAndPrice(selectAllprices) {
   let selectAllpricesArray = selectAllprices.payload
   let newPricesAndDateArray = []
 
   selectAllprices.map(element => {
     const formatedPrice = '$' + element.price.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
     let totalDate = []
-    totalDate.push(_calculateDateDiff(element.date))
+    totalDate.push(calculateDateDiff(element.date))
     const newPriceAndDate = update(element, {
                                     price: { $set: formatedPrice },
                                     date: { $set: totalDate }
                                   })
     newPricesAndDateArray.push(newPriceAndDate)
   })
-
   return newPricesAndDateArray
 }
 
@@ -61,57 +56,40 @@ function fetchAllProducts(response) {
 
   return {
     type: FETCH_PRODUCTS,
-    payload: _formatDateAndPrice(json)
+    payload: formatDateAndPrice(json)
   }
 }
 
-// export function _manageDate(emoticon) {
-//   if(emoticon.date[0].day > 0) {
-//     let moreThan1Day = emoticon.date[0].day + " days ago"
-//     return moreThan1Day
-//   } else if (emoticon.date[0].day < 0) {
-//     let lessThan1Day = emoticon.date[0].day = " hours ago"
-//     return lessThan1Day
-//  } else {
-//    const entireDate = emoticon.date[0].toString().substr(0,15)
-//    return entireDate.split(' ').join('/')
-//  }
-// }
-
-export function handlError(error) {
+export function handleError(error) {
   return {
     type: 'SOME_ERROR',
     error
   }
 }
 
-
 export function isBackOfficeEmpty(data) {
 // array does not exist, is not an array, or is empty
   if (!Array.isArray(data) || !data.length) {
-    return {
-      type: NO_MORE_DATA,
-      value: true
-    }
+    return { type: NO_MORE_DATA }
   }
 }
 
-function fetchAllProductsFiltered(response) {
-  const ndjson = response.data.split('\n').slice(0, -1)
-  const json = ndjson.map((item, i) => JSON.parse(item))
-
-  return {
-    type: FILTER_INPUT_SEARCH,
-    payload: _formatDateAndPrice(json)
-  }
-}
+// function fetchAllProductsFiltered(response) {
+//   const ndjson = response.data.split('\n').slice(0, -1)
+//   const json = ndjson.map((item, i) => JSON.parse(item))
+//
+//   return {
+//     type: FILTER_INPUT_SEARCH,
+//     payload: formatDateAndPrice(json)
+//   }
+// }
 
 
 // export function filterInputSearch(filterCategory: string){
 //   return (dispatch: Function) => {
 //     return axios.get(`http://localhost:8000/api/products?limit=30&skip=${skip}&sort=${filterCategory}`)
 //       .then(response => dispatch(fetchAllProductsFiltered(response)))
-//       .catch(error => dispatch(handlError(error)))
+//       .catch(error => dispatch(handleError(error)))
 //   }
 // }
 
@@ -122,6 +100,6 @@ export function fetchProducts(skip, filterCategory) {
       .then(response => dispatch(fetchAllProducts(response)))
       .then(dispatch({ type: INCREASE_SKIP }))
       .then(data => dispatch(isBackOfficeEmpty(data)))
-      .catch(error => dispatch(handlError(error)))
+      .catch(error => dispatch(handleError(error)))
   }
 }

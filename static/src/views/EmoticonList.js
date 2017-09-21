@@ -8,20 +8,16 @@ import { Container } from '../components/container'
 import LoadingSquare from '../utils/Loader'
 import Waypoint from 'react-waypoint'
 import Emoticon from './Emoticon'
-//import { _manageDate } from '../utils/Helpers'
 
 @connect(store => ({
   emoticons: store.emoticons,
-  skip: store.emoticons.skip
+  skip: store.emoticons.skip,
+  noMoreEmoticons: store.emoticons.noMoreData
 }), {
   fetchProducts
 })
 
 export default class EmoticonList extends Component {
-  constructor() {
-    super()
-
-  }
 
   componentDidMount() {
     this.props.fetchProducts()
@@ -44,16 +40,16 @@ export default class EmoticonList extends Component {
     this.props.fetchProducts(skip)
   }
 
-  // renderLoadingOrEndOfCatalogue () => {
-  //   if(this.state.noMoreData) {
-  //     return <div>~ end of catalogue ~</div>
-  //   } else {
-  //     return <LoadingSquare type='bars' color='#444' />
-  //   }
-  // }
+  renderLoadingOrEndOfCatalogue() {
+    if(this.props.noMoreEmoticons) {
+      return <h2>~ end of catalogue ~</h2>
+    } else {
+      return <LoadingSquare type='bars' color='#444' />
+    }
+  }
 
   render() {
-    if (!this.props.emoticons.products[0]) {
+    if (!this.props.emoticons.products.length) {
       return (
         <Loading>
           <LoadingSquare type='bars' color='#444' />
@@ -64,14 +60,14 @@ export default class EmoticonList extends Component {
     return (
       <Container>
         <Emoticons>
-          { this.renderEmoticons() }
+          {this.renderEmoticons()}
           <Waypoint
             onEnter={this.handleWaypointEnter}
             //onLeave={this.handleWaypointEnter}
            />
         </Emoticons>
         <Loading>
-          {/* { this.renderLoadingOrEndOfCatalogue() } */}
+          {this.renderLoadingOrEndOfCatalogue()}
         </Loading>
       </Container>
     );
