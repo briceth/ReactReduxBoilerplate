@@ -3,7 +3,7 @@
    "plugins": [
      "transform-decorators-legacy",
      "transform-decorators",
-    "add-module-exports",
-    "babel-plugin-styled-components"
+     "add-module-exports",
+     "babel-plugin-styled-components"
   ]
 }

@@ -12,7 +12,7 @@ export default class Emoticon extends Component {
   }
 
   render() {
-    const { emoticon, index, manageDate } = this.props;
+    const { emoticon, index } = this.props;
     return (
       <EmoticonItem key={index}>
         <EmoticonFaceWrapper>
@@ -24,7 +24,7 @@ export default class Emoticon extends Component {
           <EmoticonSize>{emoticon.size}px</EmoticonSize>
 
           <EmoticonId>{emoticon.id}</EmoticonId>
-          <EmoticonDate>{ manageDate(emoticon) }</EmoticonDate>
+          {/* <EmoticonDate>{ manageDate(emoticon) }</EmoticonDate> */}
         </EmoticonDetails>
         <Waypoint onEnter={() => { this.setState({ enter: true }) }} />
       </EmoticonItem>

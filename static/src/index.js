@@ -1,11 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers'
 
-const createStoreWithMiddleware = createStore(reducers, applyMiddleware(thunk))
+const createStoreWithMiddleware = createStore(
+  reducers,
+  compose(
+    typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ?
+    window.devToolsExtension() : f => f), applyMiddleware(thunk)
+  )
 
 import { injectGlobal } from 'styled-components';
 
