@@ -26,9 +26,14 @@ export function _calculateDateDiff(notFormatedDate) {
   diff.day = tmp
 
   if (diff.day > 6) {
-    return dateProduct
-  } else {
-    return diff
+    const substractMonth = dateProduct.toString().substr(4, 4)
+    const getMonthInInteger = new Date(Date.parse(substractMonth +" 1, 2012")).getMonth()+1
+    const entireDate = "0" + getMonthInInteger + " " + dateProduct.toString().substr(8, 7)
+    return entireDate.split(' ').join('/')
+  } else if (diff.day > 0) {
+    return diff.day + " days ago"
+  } else if (diff.day >= 0) {
+    return diff.hour + " hours ago"
   }
 }
 
@@ -40,13 +45,13 @@ export function _formatDateAndPrice(selectAllprices) {
     const formatedPrice = '$' + element.price.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
     let totalDate = []
     totalDate.push(_calculateDateDiff(element.date))
-
     const newPriceAndDate = update(element, {
-      price: { $set: formatedPrice },
-      date: { $set: totalDate }
-    })
+                                    price: { $set: formatedPrice },
+                                    date: { $set: totalDate }
+                                  })
     newPricesAndDateArray.push(newPriceAndDate)
   })
+
   return newPricesAndDateArray
 }
 
@@ -60,18 +65,18 @@ function fetchAllProducts(response) {
   }
 }
 
-export function _manageDate(emoticon) {
-  if(emoticon.date[0].day > 0) {
-    let moreThan1Day = emoticon.date[0].day + " days ago"
-    return moreThan1Day
-  } else if (emoticon.date[0].day < 0) {
-    let lessThan1Day = emoticon.date[0].day = " hours ago"
-    return lessThan1Day
- } else {
-   const entireDate = emoticon.date[0].toString().substr(0,15)
-   return entireDate.split(' ').join('/')
- }
-}
+// export function _manageDate(emoticon) {
+//   if(emoticon.date[0].day > 0) {
+//     let moreThan1Day = emoticon.date[0].day + " days ago"
+//     return moreThan1Day
+//   } else if (emoticon.date[0].day < 0) {
+//     let lessThan1Day = emoticon.date[0].day = " hours ago"
+//     return lessThan1Day
+//  } else {
+//    const entireDate = emoticon.date[0].toString().substr(0,15)
+//    return entireDate.split(' ').join('/')
+//  }
+// }
 
 export function handlError(error) {
   return {

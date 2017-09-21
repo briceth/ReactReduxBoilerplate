@@ -24,7 +24,7 @@ export default class Emoticon extends Component {
           <EmoticonSize>{emoticon.size}px</EmoticonSize>
 
           <EmoticonId>{emoticon.id}</EmoticonId>
-          {/* <EmoticonDate>{ manageDate(emoticon) }</EmoticonDate> */}
+          <EmoticonDate>{emoticon.date[0]}</EmoticonDate>
         </EmoticonDetails>
         <Waypoint onEnter={() => { this.setState({ enter: true }) }} />
       </EmoticonItem>
