@@ -1,8 +1,8 @@
 import styled from 'styled-components'
-import CSS from '../globales/css_var';
+import CSS from '../globales/css_var'
 
 export const Container = styled.div`
-  max-width: ${CSS.containerWidth}px;
+  max-width: ${CSS.containerWidth}%;
   margin: auto;
-  padding: 15px 5px;
+  padding: ${CSS.padding}px ${CSS.padding / 3}px;
 `

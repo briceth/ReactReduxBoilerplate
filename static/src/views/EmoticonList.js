@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
+import shortid from 'shortid'
 import connect from 'redux-connect-decorator'
 import { fetchProducts } from '../actions/products'
-import { Emoticons } from '../components/emoticon'
+import { Emoticons, AddSponsor } from '../components/emoticon'
 import { Loading } from '../components/loading'
 import { Filter } from '../components/filter'
 import { Container } from '../components/container'
@@ -27,10 +29,17 @@ export default class EmoticonList extends Component {
   renderEmoticons() {
     let emoticons = this.props.emoticons.products
     if ( typeof emoticons == 'object' ) {
-      return emoticons.map((emoticon, index) => <Emoticon
-                                                  emoticon={emoticon}
-                                                  key={index}
-                                                />
+      return emoticons.map((emoticon, index) => {
+        if(index % 20 === 0) {
+          return <AddSponsor key={index}>A word from our sponsors:</AddSponsor>
+        }
+
+        return <Emoticon
+                  //ref={(el) => console.log(ReactDOM.findDOMNode(el).getBoundingClientRect()) }
+                  emoticon={emoticon}
+                  key={shortid.generate()}
+                />
+        }
       )
     }
   }
@@ -63,7 +72,6 @@ export default class EmoticonList extends Component {
           {this.renderEmoticons()}
           <Waypoint
             onEnter={this.handleWaypointEnter}
-            //onLeave={this.handleWaypointEnter}
            />
         </Emoticons>
         <Loading>
@@ -73,7 +81,3 @@ export default class EmoticonList extends Component {
     );
   }
 }
-
-//const mapStateToProps = ({ emoticons }) => ({ emoticons }) // === const mapStateToProps = state => ({ emoticons: state.emoticons })
-
-//export default connect(mapStateToProps)(EmoticonList)

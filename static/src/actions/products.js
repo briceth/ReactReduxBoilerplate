@@ -3,9 +3,47 @@ import update from 'react-addons-update'
 import { FETCH_PRODUCTS, FETCH_MORE_PRODUCTS, NO_MORE_DATA,
   FORMAT_DATA, FILTER_INPUT_SEARCH, INCREASE_SKIP } from './types'
 
-export function calculateDateDiff(notFormatedDate) {
+////////////////////redux-thunk///////////////////////////////////////////
+export function fetchProducts(skip: integer, filterCategory: string) {
+  return (dispatch: Function) => {
+    return axios.get(`http://localhost:8000/api/products?limit=15&skip=${skip}`)
+      .then(response => dispatch(fetchAllProducts(response.data)))
+      .then(dispatch({ type: INCREASE_SKIP }))
+      .then(data => dispatch(isBackOfficeEmpty(data)))
+      .catch(error => dispatch(handleError(error)))
+  }
+}
+
+/////////////////////actions creator///////////////////////////////////////
+function fetchAllProducts(unParsedData) {
+  const ndjson = unParsedData.split('\n').slice(0, -1)
+  const parsedData = ndjson.map((item, i) => JSON.parse(item))
+
+  return {
+    type: FETCH_PRODUCTS,
+    payload: formatDateAndPrice(parsedData)
+  }
+}
+
+function formatDateAndPrice(selectAllprices) {
+  const newPricesAndDate = []
+
+  selectAllprices.map(element => {
+    const formatedPrice = '$' + element.price.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+    const totalDate = []
+    totalDate.push(dateDiff(element.date))
+    const newPriceAndDate = update(element, {
+                                    price: { $set: formatedPrice },
+                                    date: { $set: totalDate }
+                                  })
+    newPricesAndDate.push(newPriceAndDate)
+  })
+  return newPricesAndDate
+}
+
+function dateDiff(unFormatedDate) {
   var currentDate = new Date()
-  var dateProduct = new Date(notFormatedDate)
+  var dateProduct = new Date(unFormatedDate)
 
   var diff = {}
   var tmp = currentDate - dateProduct
@@ -33,43 +71,16 @@ export function calculateDateDiff(notFormatedDate) {
   }
 }
 
-export function formatDateAndPrice(selectAllprices) {
-  let selectAllpricesArray = selectAllprices.payload
-  let newPricesAndDateArray = []
-
-  selectAllprices.map(element => {
-    const formatedPrice = '$' + element.price.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-    let totalDate = []
-    totalDate.push(calculateDateDiff(element.date))
-    const newPriceAndDate = update(element, {
-                                    price: { $set: formatedPrice },
-                                    date: { $set: totalDate }
-                                  })
-    newPricesAndDateArray.push(newPriceAndDate)
-  })
-  return newPricesAndDateArray
-}
-
-function fetchAllProducts(response) {
-  const ndjson = response.data.split('\n').slice(0, -1)
-  const json = ndjson.map((item, i) => JSON.parse(item))
-
-  return {
-    type: FETCH_PRODUCTS,
-    payload: formatDateAndPrice(json)
-  }
-}
-
-export function handleError(error) {
+function handleError(error) {
   return {
     type: 'SOME_ERROR',
     error
   }
 }
 
-export function isBackOfficeEmpty(data) {
-// array does not exist, is not an array, or is empty
-  if (!Array.isArray(data) || !data.length) {
+function isBackOfficeEmpty(data) {
+//array does not exist, is not an array, or is empty
+  if (!Array.isArray(data.payload) || !data.length.payload) {
     return { type: NO_MORE_DATA }
   }
 }
@@ -85,21 +96,10 @@ export function isBackOfficeEmpty(data) {
 // }
 
 
-// export function filterInputSearch(filterCategory: string){
-//   return (dispatch: Function) => {
-//     return axios.get(`http://localhost:8000/api/products?limit=30&skip=${skip}&sort=${filterCategory}`)
-//       .then(response => dispatch(fetchAllProductsFiltered(response)))
-//       .catch(error => dispatch(handleError(error)))
-//   }
-// }
-
-////////////////////thunk///////////////
-export function fetchProducts(skip, filterCategory) {
+export function filterInputSearch(filterCategory: string){
   return (dispatch: Function) => {
-    return axios.get(`http://localhost:8000/api/products?limit=30&skip=${skip}`)
-      .then(response => dispatch(fetchAllProducts(response)))
-      .then(dispatch({ type: INCREASE_SKIP }))
-      .then(data => dispatch(isBackOfficeEmpty(data)))
+    return axios.get(`http://localhost:8000/api/products?limit=30&skip=${skip}&sort=${filterCategory}`)
+      .then(response => dispatch(fetchAllProductsFiltered(response)))
       .catch(error => dispatch(handleError(error)))
   }
 }

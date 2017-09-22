@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { EmoticonItem, EmoticonFace, EmoticonId, EmoticonDate, EmoticonPrice, EmoticonSize, EmoticonFaceWrapper, EmoticonDetails } from '../components/emoticon'
+import ReactDOM from 'react-dom'
+import { EmoticonItem, EmoticonFace, EmoticonId, EmoticonDate, EmoticonPrice,
+  EmoticonSize, EmoticonFaceWrapper, EmoticonDetails } from '../components/emoticon'
 import Waypoint from 'react-waypoint'
 
 export default class Emoticon extends Component {

@@ -9,9 +9,9 @@ export default function(state = DEFAULT_STATE, action) {
     case FETCH_PRODUCTS:
       return update(state, { products: { $push: action.payload }})
     case NO_MORE_DATA:
-      return { ...state, noMoreData: !state.noMoreData }
+      return { ...state, noMoreData: true }
     case INCREASE_SKIP:
-      return { ...state, skip: state.skip + 30 }
+      return { ...state, skip: state.skip + 15 }
     default:
       return state
     }

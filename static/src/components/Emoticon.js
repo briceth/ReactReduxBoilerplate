@@ -1,24 +1,21 @@
 import styled from 'styled-components'
+import CSS from '../globales/css_var'
 
 export const Emoticons = styled.div`
   display: flex;
-  flex-grow: 1;
   flex-wrap: wrap;
-  flex-direction: row;
   text-align: center;
-  flex: 1 1 0;
   justify-content: space-around;
 `
 export const EmoticonItem = styled.div`
-  border-radius: 3px;
+  border-radius: ${CSS.radius}px;
   margin-top: 5%;
   min-width: 450px;
   min-height: 200px;
   display: flex;
-  flex-direction: row;
-  background: #00d2ff;
-  background: -webkit-linear-gradient(to right,#3a7bd5,#00d2ff);
-  background: linear-gradient(to right,#3a7bd5,#00d2ff);
+  background: ${CSS.blueSky};
+  background: -webkit-linear-gradient(to right,${CSS.blue},${CSS.blueSky});
+  background: linear-gradient(to right,${CSS.blue},${CSS.blueSky});
   transition: 0.2s all ease;
   box-shadow: ${CSS.boxShadow1};
   &:hover {
@@ -101,3 +98,5 @@ export const EmoticonSize = styled.p`
   font-weight: 100;
   border-image: linear-gradient(135deg, red, blue) 1 1;
 `
+
+export const AddSponsor = styled(EmoticonItem)``
