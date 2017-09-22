@@ -12,6 +12,8 @@ export default function(state = DEFAULT_STATE, action) {
       return { ...state, noMoreData: true }
     case INCREASE_SKIP:
       return { ...state, skip: state.skip + 15 }
+    case FILTER_INPUT_SEARCH:
+      return update(state, { products: { $set: action.payload }})
     default:
       return state
     }

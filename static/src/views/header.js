@@ -1,14 +1,19 @@
 import React, { Component } from 'react'
 import connect from 'redux-connect-decorator'
-import { fetchProducts } from '../actions/products'
+import { filterInputSearch } from '../actions/products'
 import { HeaderWrapper, HeaderContent } from '../components/header'
 import { Filter } from '../components/filter'
 import { Container } from '../components/container'
 import { TitleAlpha, Tagline } from '../components/title'
 
-@connect(store => ({}), { fetchProducts })
+@connect(store => ({}), { filterInputSearch })
 
 export default class Header extends Component {
+  componentWillMount() {
+    var a = 10;
+    var b = 10;
+    console.log(`The number of JS MVC frameworks is ${2 * (a + b)} and not ${10 * (a + b)}.`);
+  }
   render() {
     return (
       <HeaderWrapper>
@@ -19,8 +24,9 @@ export default class Header extends Component {
             <Tagline>But first, a word from our sponsors:</Tagline> {document.write('<img className="ad" src="/ad/?r=' + Math.floor(Math.random()*1000) + '"/>')}
           </HeaderContent>
             <Filter>
-              <select onChange={(event) => {this.props.fetchProducts(event.target.value)}}>
-                <option value="id" defaultValue>Id</option>
+              <select onChange={(event) => {this.props.filterInputSearch(event.target.value)}}>
+                <option></option>
+                <option value="id">Id</option>
                 <option value="size">Size</option>
                 <option value="price">Price</option>
               </select>

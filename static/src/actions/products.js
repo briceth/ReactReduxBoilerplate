@@ -85,21 +85,41 @@ function isBackOfficeEmpty(data) {
   }
 }
 
-// function fetchAllProductsFiltered(response) {
-//   const ndjson = response.data.split('\n').slice(0, -1)
-//   const json = ndjson.map((item, i) => JSON.parse(item))
-//
-//   return {
-//     type: FILTER_INPUT_SEARCH,
-//     payload: formatDateAndPrice(json)
-//   }
-// }
+function fetchAllProductsFiltered(response) {
+  const ndjson = response.split('\n').slice(0, -1)
+  const parsedData = ndjson.map((item, i) => JSON.parse(item))
+  console.log(parsedData)
+  return {
+    type: FILTER_INPUT_SEARCH,
+    payload: formatDateAndPrice(parsedData)
+  }
+}
 
 
-export function filterInputSearch(filterCategory: string){
+export function filterInputSearch(filterCategory: string, skip: integer){
   return (dispatch: Function) => {
-    return axios.get(`http://localhost:8000/api/products?limit=30&skip=${skip}&sort=${filterCategory}`)
-      .then(response => dispatch(fetchAllProductsFiltered(response)))
-      .catch(error => dispatch(handleError(error)))
+    return axios.get(`http://localhost:8000/api/products?limit=15&sort=${filterCategory}`)
+      .then(response => dispatch(fetchAllProductsFiltered(response.data)))
+      //.then(response => console.log(response.data))
+      .then(dispatch({ type: INCREASE_SKIP }))
+      .then(data => dispatch(isBackOfficeEmpty(data)))
+      .catch(function (error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error', error.message);
+        }
+        console.log(error.config);
+      });
   }
 }
