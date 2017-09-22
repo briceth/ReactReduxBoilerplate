@@ -21,7 +21,7 @@ export default class Header extends Component {
           <HeaderContent>
             <TitleAlpha>Discount Ascii Warehouse</TitleAlpha>
             <Tagline>Here you're sure to find a bargain on some of the finest ascii available to purchase. Be sure to peruse our selection of ascii faces in an exciting range of sizes and prices.</Tagline>
-            <Tagline>But first, a word from our sponsors:</Tagline> {document.write('<img className="ad" src="/ad/?r=' + Math.floor(Math.random()*1000) + '"/>')}
+            <Tagline>But first, a word from our sponsors:</Tagline>
           </HeaderContent>
             <Filter>
               <select onChange={(event) => { this.handleChange(event) }}>

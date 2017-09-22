@@ -9,7 +9,14 @@ module.exports = {
   devtool: 'inline-source-map',
   devServer: {
      contentBase: './static/dist',
-     port: 8008
+     port: 8008,
+     historyApiFallback: true,
+     proxy: {
+       '/ad': {
+         target: 'http://localhost:8000',
+         secure: false
+       }
+     }
    },
   module: {
      rules: [

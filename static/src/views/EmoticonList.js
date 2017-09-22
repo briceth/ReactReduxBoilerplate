@@ -32,7 +32,7 @@ export default class EmoticonList extends Component {
     let emoticons = this.props.emoticons.products
     return emoticons.map((emoticon, index) => {
       if(index % 20 === 0 && index !== 0) {
-        return <AddSponsor key={index}>A word from our sponsors:</AddSponsor>
+        return <AddSponsor key={index}>A word from our sponsors:<img className="ad" src="/ad/?r=' + Math.floor(Math.random()*1000) + '"/></AddSponsor>
       }
       return <Emoticon emoticon={emoticon} key={shortid.generate()} />
       }
