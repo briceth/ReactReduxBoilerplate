@@ -15,7 +15,8 @@ import { TitleBeta } from '../components/title'
 @connect(store => ({
   emoticons: store.emoticons,
   skip: store.emoticons.skip,
-  noMoreEmoticons: store.emoticons.noMoreData
+  noMoreEmoticons: store.emoticons.noMoreData,
+  category: store.emoticons.category
 }), {
   fetchProducts
 })
@@ -39,8 +40,8 @@ export default class EmoticonList extends Component {
   }
 
   handleWaypointEnter = () => {
-    const { skip } = this.props
-    this.props.fetchProducts(skip)
+    const { skip, category } = this.props
+    this.props.fetchProducts(skip, category)
   }
 
   renderLoadingOrEndOfCatalogue() {

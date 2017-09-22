@@ -1,12 +1,15 @@
 import axios from 'axios'
 import update from 'react-addons-update'
 import { FETCH_PRODUCTS, FETCH_MORE_PRODUCTS, NO_MORE_DATA,
-  FORMAT_DATA, FILTER_INPUT_SEARCH, INCREASE_SKIP } from './types'
+  FORMAT_DATA, FILTER_INPUT_SEARCH, INCREASE_SKIP, FILTER_CATEGORY } from './types'
+
+const ROOT_URL = `http://localhost:8000/api/products`
 
 ////////////////////redux-thunk///////////////////////////////////////////
-export function fetchProducts(skip: integer, filterCategory: string) {
+export function fetchProducts(skip: integer, filterCategory = "") {
+  console.log(skip, filterCategory)
   return (dispatch: Function) => {
-    return axios.get(`http://localhost:8000/api/products?limit=15&skip=${skip}`)
+    return axios.get(`${ROOT_URL}?limit=15&skip=${skip}&sort=${filterCategory}`)
       .then(response => dispatch(fetchAllProducts(response.data)))
       .then(dispatch({ type: INCREASE_SKIP }))
       .then(data => dispatch(isBackOfficeEmpty(data)))
@@ -95,13 +98,12 @@ function fetchAllProductsFiltered(response) {
   }
 }
 
-
-export function filterInputSearch(filterCategory: string, skip: integer){
+export function filterInputSearch(filterCategory: string){
   return (dispatch: Function) => {
-    return axios.get(`http://localhost:8000/api/products?limit=15&sort=${filterCategory}`)
+    return axios.get(`${ROOT_URL}?limit=15&sort=${filterCategory}`)
       .then(response => dispatch(fetchAllProductsFiltered(response.data)))
       //.then(response => console.log(response.data))
-      .then(dispatch({ type: INCREASE_SKIP }))
+      .then(dispatch({ type: FILTER_CATEGORY, payload: filterCategory }))
       .then(data => dispatch(isBackOfficeEmpty(data)))
       .catch(function (error) {
         if (error.response) {
