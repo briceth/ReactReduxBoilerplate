@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import { EmoticonItem, EmoticonFace, EmoticonId, EmoticonDate, EmoticonPrice,
-  EmoticonSize, EmoticonFaceWrapper, EmoticonDetails } from '../components/emoticon'
+  EmoticonSize, EmoticonFaceWrapper, EmoticonDetails } from './component'
 import Waypoint from 'react-waypoint'
 
 export default class Emoticon extends Component {
@@ -20,11 +19,9 @@ export default class Emoticon extends Component {
         <EmoticonFaceWrapper>
           <EmoticonFace size={emoticon.size}>{emoticon.face}</EmoticonFace>
         </EmoticonFaceWrapper>
-
         <EmoticonDetails enter={this.state.enter} leave={this.state.leave}>
           <EmoticonPrice>{emoticon.price}</EmoticonPrice>
           <EmoticonSize>{emoticon.size}px</EmoticonSize>
-
           <EmoticonId>{emoticon.id}</EmoticonId>
           <EmoticonDate>{emoticon.date[0]}</EmoticonDate>
         </EmoticonDetails>

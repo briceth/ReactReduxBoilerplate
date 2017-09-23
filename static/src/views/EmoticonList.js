@@ -1,15 +1,13 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import shortid from 'shortid'
 import connect from 'redux-connect-decorator'
 import { fetchProducts } from '../actions/products'
-import { Emoticons, AddSponsor } from '../components/emoticon'
+import Emoticon from '../components/emoticon/index'
+import { Emoticons, AddSponsor } from '../components/emoticon/component'
 import { Loading } from '../components/loading'
-import { Filter } from '../components/filter'
 import { Container } from '../components/container'
 import LoadingSquare from '../utils/Loader'
 import Waypoint from 'react-waypoint'
-import Emoticon from './Emoticon'
 import { TitleBeta } from '../components/title'
 
 @connect(store => ({

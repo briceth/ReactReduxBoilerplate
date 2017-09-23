@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import CSS from '../globales/css_var'
+import CSS from '../../globales/css_var'
 
 export const HeaderWrapper = styled.div`
   background: ${CSS.blueSky};  /* fallback for old browsers */

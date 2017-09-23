@@ -10,7 +10,6 @@ module.exports = {
   devServer: {
      contentBase: './static/dist',
      port: 8008,
-     historyApiFallback: true,
      proxy: {
        '/ad': {
          target: 'http://localhost:8000',
