@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import connect from 'redux-connect-decorator'
 import { filterInputSearch } from '../../actions/products'
-import { Filter } from './component'
+import { Filter, Label, Select, Option } from './component'
 
 @connect(store => ({}), { filterInputSearch })
 
@@ -15,13 +15,13 @@ export default class Input extends Component {
   render() {
     return (
       <Filter>
-        <label>Filtrer par catégorie: </label>
-        <select onChange={(event) => { this.handleChange(event) }}>
-          <option disabled>Choisissez votre filtre</option>
-          <option value="id">Id</option>
-          <option value="size">Size</option>
-          <option value="price">Price</option>
-        </select>
+        <Label>Filtrer par catégorie: </Label>
+        <Select onChange={(event) => { this.handleChange(event) }}>
+          <Option disabled>Choisissez votre filtre</Option>
+          <Option value="id">Id</Option>
+          <Option value="size">Size</Option>
+          <Option value="price">Price</Option>
+        </Select>
       </Filter>
     )
   }
