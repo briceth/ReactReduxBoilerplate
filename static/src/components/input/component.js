@@ -1,7 +1,11 @@
 import styled from 'styled-components'
+import CSS from '../../globales/css_var'
 
 export const Filter = styled.div``
-export const Label = styled.label``
+
+export const Label = styled.label`
+  color: white;
+`
 
 export const Select = styled.select`
   height: 49px;
@@ -9,7 +13,7 @@ export const Select = styled.select`
   border-radius: 5px;
   border: none;
   outline: 0;
-  padding: 15px;
-  margin: 7.5px 0;
+  padding: {CSS.padding}px;
+  margin: {CSS.padding / 2}px 0;
 `
 export const Option = styled.option``
