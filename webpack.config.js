@@ -6,7 +6,15 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, './static/dist'),
   },
-  devtool: 'inline-source-map',
+  devtool: 'cheap-eval-source-map',
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
+  stats: {
+    colors: true,
+    reasons: true,
+    chunks: true,
+  },
   devServer: {
     contentBase: './static/dist',
     port: 8008,
@@ -22,13 +30,8 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(css|scss)$/,
-        exclude: /^node_modules$/,
-        loader: 'style-loader!css-loader!sass-loader',
-      },
-      {
-        use: 'babel-loader',
-        test: /\.js$/,
+        test: /\.jsx?$/,
+        loader: 'babel-loader',
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
