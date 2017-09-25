@@ -1,8 +1,8 @@
-import { combineReducers } from 'redux'
-import productsReducer from './productsReducer'
+import { combineReducers } from 'redux';
+import productsReducer from './productsReducer';
 
 const reducers = combineReducers({
-  emoticons: productsReducer
-})
+  emoticons: productsReducer,
+});
 
-export default reducers
+export default reducers;

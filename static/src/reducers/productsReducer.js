@@ -1,25 +1,36 @@
-import update from 'react-addons-update'
-import { FETCH_PRODUCTS, FETCH_MORE_PRODUCTS, NO_MORE_DATA,
-  FILTER_INPUT_SEARCH, INCREASE_SKIP, FILTER_CATEGORY,
-  IS_CHANGING_CATEGORY, CHANGED_CATEGORY, ERROR } from '../actions/types'
+import update from 'react-addons-update';
+import {
+  FETCH_PRODUCTS,
+  NO_MORE_DATA,
+  FILTER_INPUT_SEARCH,
+  INCREASE_SKIP,
+  FILTER_CATEGORY,
+  ERROR,
+} from '../actions/types';
 
-const DEFAULT_STATE = { products: [], skip: 0, noMoreData: false, category: '', error: ''}
+const DEFAULT_STATE = {
+  products: [],
+  skip: 0,
+  noMoreData: false,
+  category: '',
+  error: '',
+};
 
 export default function(state = DEFAULT_STATE, action) {
   switch (action.type) {
     case FETCH_PRODUCTS:
-      return update(state, { products: { $push: action.payload }})
+      return update(state, { products: { $push: action.payload } });
     case NO_MORE_DATA:
-      return { ...state, noMoreData: true }
+      return { ...state, noMoreData: true };
     case INCREASE_SKIP:
-      return { ...state, skip: state.skip + 15 }
+      return { ...state, skip: state.skip + 15 };
     case FILTER_INPUT_SEARCH:
-      return update(state, { products: { $set: action.payload }})
+      return update(state, { products: { $set: action.payload } });
     case FILTER_CATEGORY:
-      return { ...state, category: action.payload }
+      return { ...state, category: action.payload };
     case ERROR:
-      return { ...state, error: action.payload }
+      return { ...state, error: action.payload };
     default:
-      return state
-    }
+      return state;
   }
+}

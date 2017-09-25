@@ -4,36 +4,36 @@ module.exports = {
   entry: './static/src/index.js',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, './static/dist')
+    path: path.resolve(__dirname, './static/dist'),
   },
   devtool: 'inline-source-map',
   devServer: {
-     contentBase: './static/dist',
-     port: 8008,
-     proxy: [{
-        context: ["/ad", "/api"],
-        target: "http://localhost:8000",
+    contentBase: './static/dist',
+    port: 8008,
+    proxy: [
+      {
+        context: ['/ad', '/api'],
+        target: 'http://localhost:8000',
         changeOrigin: true,
-        secure: false
-      }]
-   },
+        secure: false,
+      },
+    ],
+  },
   module: {
-     rules: [
-       {
-         test: /\.(css|scss)$/,
-         exclude: /^node_modules$/,
-         loader: 'style-loader!css-loader!sass-loader',
-       },
-       {
+    rules: [
+      {
+        test: /\.(css|scss)$/,
+        exclude: /^node_modules$/,
+        loader: 'style-loader!css-loader!sass-loader',
+      },
+      {
         use: 'babel-loader',
         test: /\.js$/,
       },
       {
-         test: /\.(png|svg|jpg|gif)$/,
-         use: [
-           'file-loader'
-         ]
-       }
-     ]
-   }
+        test: /\.(png|svg|jpg|gif)$/,
+        use: ['file-loader'],
+      },
+    ],
+  },
 };

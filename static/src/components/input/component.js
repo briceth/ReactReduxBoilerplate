@@ -1,11 +1,9 @@
-import styled from 'styled-components'
-import CSS from '../../globales/css_var'
+import styled from 'styled-components';
+import CSS from '../../globales/css_var';
 
-export const Filter = styled.div``
+export const Filter = styled.div``;
 
-export const Label = styled.label`
-  color: white;
-`
+export const Label = styled.label`color: white;`;
 
 export const Select = styled.select`
   height: 49px;
@@ -15,5 +13,6 @@ export const Select = styled.select`
   outline: 0;
   padding: {CSS.padding}px;
   margin: {CSS.padding / 2}px 0;
-`
-export const Option = styled.option``
+`;
+
+export const Option = styled.option``;
