@@ -38,9 +38,9 @@ export const EmoticonDetails = styled.div`
   box-shadow: -5px 5px 15px #397dd6;
   border-radius: 3px;
   transform: translateY(25%);
-  -webkit-transition: 1.2s ease-in-out;
-  -moz-transition: 1.2s ease-in-out;
-  -o-transition: 1.2s ease-in-out;
+  -webkit-transition: 0.5s ease-in-out;
+  -moz-transition: 0.5s ease-in-out;
+  -o-transition: 0.5s ease-in-out;
 
   &:hover {
     box-shadow: -5px 5px 20px 3px rgba(2, 69, 163, 0.4);

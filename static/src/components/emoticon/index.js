@@ -20,7 +20,7 @@ export default class Emoticon extends Component {
         <EmoticonFaceWrapper>
           <EmoticonFace size={emoticon.size}>{emoticon.face}</EmoticonFace>
         </EmoticonFaceWrapper>
-        <EmoticonDetails enter={this.state.enter} leave={this.state.leave}>
+        <EmoticonDetails enter={this.state.enter}>
           <EmoticonPrice>{emoticon.price}</EmoticonPrice>
           <EmoticonSize>{emoticon.size}px</EmoticonSize>
           <EmoticonId>{emoticon.id}</EmoticonId>

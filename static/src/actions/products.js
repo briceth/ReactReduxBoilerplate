@@ -1,8 +1,7 @@
 import axios from 'axios'
 import update from 'react-addons-update'
 import { FETCH_PRODUCTS, FETCH_MORE_PRODUCTS, NO_MORE_DATA,
-  FORMAT_DATA, FILTER_INPUT_SEARCH, INCREASE_SKIP, FILTER_CATEGORY,
-  IS_CHANGING_CATEGORY, CHANGED_CATEGORY, ERROR } from './types'
+  FORMAT_DATA, FILTER_INPUT_SEARCH, INCREASE_SKIP, FILTER_CATEGORY, ERROR } from './types'
 
 const ROOT_URL = `http://localhost:8000/api/products`
 
@@ -20,11 +19,9 @@ export function fetchProducts(skip: integer, filterCategory = "") {
 export function filterInputSearch(filterCategory: string){
   return (dispatch: Function) => {
     return axios.get(`${ROOT_URL}?limit=15&sort=${filterCategory}`)
-      .then(dispatch({ type: IS_CHANGING_CATEGORY }))
       .then(response => dispatch(fetchAllProductsFiltered(response.data)))
       .then(dispatch({ type: FILTER_CATEGORY, payload: filterCategory }))
       .then(data => dispatch(isBackOfficeEmpty(data)))
-      .then(dispatch({ type: CHANGED_CATEGORY }))
       .catch(error => dispatch(handleError(error)))
   }
 }

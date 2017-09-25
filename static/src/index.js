@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers'
 
-const createStoreWithMiddleware = createStore(
+export const createStoreWithMiddleware = createStore(
   reducers,
   compose(
     typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ?
