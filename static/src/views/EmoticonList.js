@@ -14,7 +14,8 @@ import { TitleBeta } from '../components/title'
   emoticons: store.emoticons,
   skip: store.emoticons.skip,
   noMoreEmoticons: store.emoticons.noMoreData,
-  category: store.emoticons.category
+  category: store.emoticons.category,
+  isChangingCategory: store.emoticons.isChangingCategory
 }), {
   fetchProducts
 })
@@ -23,7 +24,6 @@ export default class EmoticonList extends Component {
 
   componentDidMount() {
     this.props.fetchProducts()
-    this.setState({ loading: false })
   }
 
   renderEmoticons() {
@@ -49,6 +49,7 @@ export default class EmoticonList extends Component {
       return <LoadingSquare type='bars' color='#444' />
     }
   }
+
 
   render() {
     if (!this.props.emoticons.products.length) {

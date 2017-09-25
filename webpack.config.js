@@ -10,7 +10,6 @@ module.exports = {
   devServer: {
      contentBase: './static/dist',
      port: 8008,
-     headers: { "Access-Control-Allow-Origin": "http://localhost:8008", "Access-Control-Allow-Credentials": "true" },
      proxy: [{
         context: ["/ad", "/api"],
         target: "http://localhost:8000",

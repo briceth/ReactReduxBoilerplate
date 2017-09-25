@@ -18,27 +18,15 @@ injectGlobal`
   @import url('https://necolas.github.io/normalize.css/7.0.0/normalize.css');
   @import url('https://fonts.googleapis.com/css?family=Titillium+Web:400,600');
   html {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    background: white;
-    font-size: 16px;
-    color: rgba(0,0,0, .8);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     font-feature-settings: "pnum";
     font-variant-numeric: proportional-nums;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px;
     font-weight: 400;
     overflow-x: hidden;
     line-height: 1.8;
-  }
-
-  input, textarea {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 16px;
-    color: rgba(0,0,0, .8);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-
+    color: white;
   }
 
   body {

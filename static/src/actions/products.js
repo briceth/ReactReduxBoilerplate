@@ -1,18 +1,30 @@
 import axios from 'axios'
 import update from 'react-addons-update'
 import { FETCH_PRODUCTS, FETCH_MORE_PRODUCTS, NO_MORE_DATA,
-  FORMAT_DATA, FILTER_INPUT_SEARCH, INCREASE_SKIP, FILTER_CATEGORY } from './types'
+  FORMAT_DATA, FILTER_INPUT_SEARCH, INCREASE_SKIP, FILTER_CATEGORY,
+  IS_CHANGING_CATEGORY, CHANGED_CATEGORY, ERROR } from './types'
 
 const ROOT_URL = `http://localhost:8000/api/products`
 
 ////////////////////redux-thunk///////////////////////////////////////////
 export function fetchProducts(skip: integer, filterCategory = "") {
-  console.log(skip, filterCategory)
   return (dispatch: Function) => {
     return axios.get(`${ROOT_URL}?limit=15&skip=${skip}&sort=${filterCategory}`)
       .then(response => dispatch(fetchAllProducts(response.data)))
       .then(dispatch({ type: INCREASE_SKIP }))
       .then(data => dispatch(isBackOfficeEmpty(data)))
+      .catch(error => dispatch(handleError(error)))
+  }
+}
+
+export function filterInputSearch(filterCategory: string){
+  return (dispatch: Function) => {
+    return axios.get(`${ROOT_URL}?limit=15&sort=${filterCategory}`)
+      .then(dispatch({ type: IS_CHANGING_CATEGORY }))
+      .then(response => dispatch(fetchAllProductsFiltered(response.data)))
+      .then(dispatch({ type: FILTER_CATEGORY, payload: filterCategory }))
+      .then(data => dispatch(isBackOfficeEmpty(data)))
+      .then(dispatch({ type: CHANGED_CATEGORY }))
       .catch(error => dispatch(handleError(error)))
   }
 }
@@ -24,6 +36,16 @@ function fetchAllProducts(unParsedData) {
 
   return {
     type: FETCH_PRODUCTS,
+    payload: formatDateAndPrice(parsedData)
+  }
+}
+
+function fetchAllProductsFiltered(response) {
+  const ndjson = response.split('\n').slice(0, -1)
+  const parsedData = ndjson.map((item, i) => JSON.parse(item))
+
+  return {
+    type: FILTER_INPUT_SEARCH,
     payload: formatDateAndPrice(parsedData)
   }
 }
@@ -76,8 +98,8 @@ function dateDiff(unFormatedDate) {
 
 function handleError(error) {
   return {
-    type: 'SOME_ERROR',
-    error
+    type: ERROR,
+    payload: error.headers || error.request
   }
 }
 
@@ -85,43 +107,5 @@ function isBackOfficeEmpty(data) {
 //array does not exist, is not an array, or is empty
   if (!Array.isArray(data.payload) || !data.length.payload) {
     return { type: NO_MORE_DATA }
-  }
-}
-
-function fetchAllProductsFiltered(response) {
-  const ndjson = response.split('\n').slice(0, -1)
-  const parsedData = ndjson.map((item, i) => JSON.parse(item))
-  console.log(parsedData)
-  return {
-    type: FILTER_INPUT_SEARCH,
-    payload: formatDateAndPrice(parsedData)
-  }
-}
-
-export function filterInputSearch(filterCategory: string){
-  return (dispatch: Function) => {
-    return axios.get(`${ROOT_URL}?limit=15&sort=${filterCategory}`)
-      .then(response => dispatch(fetchAllProductsFiltered(response.data)))
-      //.then(response => console.log(response.data))
-      .then(dispatch({ type: FILTER_CATEGORY, payload: filterCategory }))
-      .then(data => dispatch(isBackOfficeEmpty(data)))
-      .catch(function (error) {
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          // The request was made but no response was received
-          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-          // http.ClientRequest in node.js
-          console.log(error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log('Error', error.message);
-        }
-        console.log(error.config);
-      });
   }
 }
