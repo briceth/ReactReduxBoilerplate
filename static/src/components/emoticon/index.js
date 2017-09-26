@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import Waypoint from 'react-waypoint';
 import PropTypes from 'prop-types';
 import {
-  EmoticonItem,
-  EmoticonFace,
-  EmoticonId,
-  EmoticonDate,
-  EmoticonPrice,
-  EmoticonSize,
-  EmoticonFaceWrapper,
-  EmoticonDetails,
+  Item,
+  Face,
+  Id,
+  Date,
+  Price,
+  Size,
+  FaceWrapper,
+  Details,
 } from './component';
 
 export default class Emoticon extends Component {
@@ -24,22 +24,22 @@ export default class Emoticon extends Component {
   render() {
     const { emoticon } = this.props;
     return (
-      <EmoticonItem>
+      <Item>
         <Waypoint
           onEnter={() => {
             this.setState({ enter: true });
           }}
         />
-        <EmoticonFaceWrapper>
-          <EmoticonFace size={emoticon.size}>{emoticon.face}</EmoticonFace>
-        </EmoticonFaceWrapper>
-        <EmoticonDetails enter={this.state.enter}>
-          <EmoticonPrice>{emoticon.price}</EmoticonPrice>
-          <EmoticonSize>{emoticon.size}px</EmoticonSize>
-          <EmoticonId>{emoticon.id}</EmoticonId>
-          <EmoticonDate>{emoticon.date[0]}</EmoticonDate>
-        </EmoticonDetails>
-      </EmoticonItem>
+        <FaceWrapper>
+          <Face size={emoticon.size}>{emoticon.face}</Face>
+        </FaceWrapper>
+        <Details enter={this.state.enter}>
+          <Price>{emoticon.price}</Price>
+          <Size>{emoticon.size}px</Size>
+          <Id>{emoticon.id}</Id>
+          <Date>{emoticon.date[0]}</Date>
+        </Details>
+      </Item>
     );
   }
 }

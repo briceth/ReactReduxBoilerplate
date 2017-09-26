@@ -8,7 +8,7 @@ export const Emoticons = styled.div`
   justify-content: space-around;
 `;
 
-export const EmoticonItem = styled.div`
+export const Item = styled.div`
   border-radius: ${CSS.radius}px;
   margin-top: 5%;
   min-width: 450px;
@@ -25,12 +25,12 @@ export const EmoticonItem = styled.div`
   }
 `;
 
-export const EmoticonFaceWrapper = styled.div`
+export const FaceWrapper = styled.div`
   flex: 1 1 40%;
   margin: auto;
 `;
 
-export const EmoticonDetails = styled.div`
+export const Details = styled.div`
   flex: 1 1 60%;
   position: relative;
   color: #3a7bd5;
@@ -51,14 +51,14 @@ export const EmoticonDetails = styled.div`
   ${props => props.enter && `transform: translateY(0%);`};
 `;
 
-export const EmoticonFace = styled.p`
+export const Face = styled.p`
   font-size: ${props => props.size}px;
   color: white;
   text-shadow: 2px 2px #3a7bd5;
 }
 `;
 
-export const EmoticonId = styled.p`
+export const Id = styled.p`
   position: absolute;
   bottom: 0;
   left: 28px;
@@ -68,7 +68,7 @@ export const EmoticonId = styled.p`
   border-image: linear-gradient(135deg, red, blue) 1 1;
 `;
 
-export const EmoticonDate = styled.p`
+export const Date = styled.p`
   position: absolute;
   bottom: 0px;
   right: 20px;
@@ -76,7 +76,7 @@ export const EmoticonDate = styled.p`
   font-size: 14px;
 `;
 
-export const EmoticonPrice = styled.p`
+export const Price = styled.p`
   position: absolute;
   top: 0px;
   left: 28px;
@@ -91,7 +91,7 @@ export const EmoticonPrice = styled.p`
   -webkit-text-fill-color: transparent;
 `;
 
-export const EmoticonSize = styled.p`
+export const Size = styled.p`
   position: absolute;
   top: 0;
   right: 20px;
@@ -102,4 +102,4 @@ export const EmoticonSize = styled.p`
   border-image: linear-gradient(135deg, red, blue) 1 1;
 `;
 
-export const AddSponsor = styled(EmoticonItem)``;
+export const AddSponsor = styled(Item)``;
