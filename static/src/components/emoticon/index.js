@@ -17,13 +17,9 @@ export default class Emoticon extends Component {
     emoticon: PropTypes.object.isRequired,
   };
 
-  constructor() {
-    super();
-
-    this.state = {
-      enter: false,
-    };
-  }
+  state = {
+    enter: false,
+  };
 
   render() {
     const { emoticon } = this.props;

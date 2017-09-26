@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import CSS from '../../globales/css_var';
+import CSS from '../../globales/css_var' //eslint-disable-line
 
 export const Filter = styled.div``;
 
