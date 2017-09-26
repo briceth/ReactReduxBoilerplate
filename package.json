@@ -58,7 +58,6 @@
 		"babel-preset-airbnb": "^2.4.0",
 		"babel-preset-flow": "^6.23.0",
 		"babel-preset-stage-2": "^6.24.1",
-		"css-loader": "^0.28.4",
 		"eslint": "^4.7.2",
 		"eslint-config-prettier": "^2.6.0",
 		"eslint-plugin-prettier": "^2.3.1",
