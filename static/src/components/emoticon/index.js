@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Waypoint from 'react-waypoint';
+import PropTypes from 'prop-types';
 import {
   EmoticonItem,
   EmoticonFace,
@@ -9,9 +11,12 @@ import {
   EmoticonFaceWrapper,
   EmoticonDetails,
 } from './component';
-import Waypoint from 'react-waypoint';
 
 export default class Emoticon extends Component {
+  static propTypes = {
+    emoticon: PropTypes.object.isRequired,
+  };
+
   constructor() {
     super();
 
@@ -21,9 +26,9 @@ export default class Emoticon extends Component {
   }
 
   render() {
-    const { emoticon, index } = this.props;
+    const { emoticon } = this.props;
     return (
-      <EmoticonItem key={index}>
+      <EmoticonItem>
         <Waypoint
           onEnter={() => {
             this.setState({ enter: true });

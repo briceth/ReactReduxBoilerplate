@@ -9,6 +9,7 @@ import { Container } from '../components/container';
 import LoadingSquare from '../utils/Loader';
 import Waypoint from 'react-waypoint';
 import { TitleBeta } from '../components/title';
+import PropTypes from 'prop-types';
 
 @connect(
   store => ({
@@ -22,6 +23,14 @@ import { TitleBeta } from '../components/title';
   },
 )
 export default class EmoticonList extends Component {
+  static propTypes = {
+    fetchProducts: PropTypes.func.isRequired,
+    emoticons: PropTypes.object.isRequired,
+    skip: PropTypes.number.isRequired,
+    category: PropTypes.string.isRequired,
+    noMoreEmoticons: PropTypes.bool.isRequired,
+  };
+
   componentDidMount() {
     this.props.fetchProducts();
   }
@@ -31,7 +40,7 @@ export default class EmoticonList extends Component {
     return emoticons.map((emoticon, index) => {
       if (index % 20 === 0 && index !== 0) {
         return (
-          <AddSponsor key={index}>
+          <AddSponsor key={shortid.generate()}>
             A word from our sponsors:
             <img
               className="ad"
@@ -40,7 +49,7 @@ export default class EmoticonList extends Component {
           </AddSponsor>
         );
       }
-      return <Emoticon emoticon={emoticon} key={shortid.generate()} />;
+      return <Emoticon emoticon={emoticon} key={emoticon.id} />;
     });
   }
 

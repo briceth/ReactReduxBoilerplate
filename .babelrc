@@ -1,21 +1,24 @@
 {
 	"presets": [
 		"react",
+		"stage-2",
 		[
 			"env",
 			{
 				"targets": {
 					"browsers": ["last 2 versions", "safari >= 7"]
 				},
-				"modules": false
+				"modules": false,
+				"loose": true
 			}
-		],
-		"stage-2"
+		]
 	],
 	"plugins": [
-		"transform-decorators-legacy",
-		"transform-decorators",
 		"add-module-exports",
+		"transform-es2015-modules-umd",
+		"transform-decorators-legacy",
+		"transform-class-properties",
+		"transform-decorators",
 		"babel-plugin-styled-components"
 	]
 }

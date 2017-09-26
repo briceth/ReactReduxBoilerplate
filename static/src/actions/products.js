@@ -2,9 +2,7 @@ import axios from 'axios';
 import update from 'react-addons-update';
 import {
   FETCH_PRODUCTS,
-  FETCH_MORE_PRODUCTS,
   NO_MORE_DATA,
-  FORMAT_DATA,
   FILTER_INPUT_SEARCH,
   INCREASE_SKIP,
   FILTER_CATEGORY,
@@ -14,7 +12,7 @@ import {
 const ROOT_URL = `http://localhost:8000/api/products`;
 
 ////////////////////redux-thunk///////////////////////////////////////////
-export function fetchProducts(skip: integer, filterCategory = '') {
+export function fetchProducts(skip, filterCategory = '') {
   return (dispatch: Function) => {
     return axios
       .get(`${ROOT_URL}?limit=15&skip=${skip}&sort=${filterCategory}`)
@@ -39,7 +37,7 @@ export function filterInputSearch(filterCategory: string) {
 /////////////////////actions creator///////////////////////////////////////
 function fetchAllProducts(unParsedData) {
   const ndjson = unParsedData.split('\n').slice(0, -1);
-  const parsedData = ndjson.map((item, i) => JSON.parse(item));
+  const parsedData = ndjson.map(item => JSON.parse(item));
 
   return {
     type: FETCH_PRODUCTS,
@@ -49,7 +47,7 @@ function fetchAllProducts(unParsedData) {
 
 function fetchAllProductsFiltered(response) {
   const ndjson = response.split('\n').slice(0, -1);
-  const parsedData = ndjson.map((item, i) => JSON.parse(item));
+  const parsedData = ndjson.map(item => JSON.parse(item));
 
   return {
     type: FILTER_INPUT_SEARCH,

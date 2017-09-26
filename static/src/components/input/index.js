@@ -2,9 +2,14 @@ import React, { Component } from 'react';
 import connect from 'redux-connect-decorator';
 import { filterInputSearch } from '../../actions/products';
 import { Filter, Label, Select, Option } from './component';
+import PropTypes from 'prop-types';
 
-@connect(store => ({}), { filterInputSearch })
+@connect(null, { filterInputSearch })
 export default class Input extends Component {
+  static propTypes = {
+    filterInputSearch: PropTypes.func.isRequired,
+  };
+
   handleChange = event => {
     event.preventDefault();
     this.props.filterInputSearch(event.target.value);
