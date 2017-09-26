@@ -20,7 +20,7 @@ module.exports = {
     port: 8008,
     proxy: [
       {
-        context: ['/ad', '/api'],
+        context: ['/api'],
         target: 'http://localhost:8000',
         changeOrigin: true,
         secure: false,
@@ -39,10 +39,6 @@ module.exports = {
         test: /\.jsx?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
-      },
-      {
-        test: /\.(png|svg|jpg|gif)$/,
-        use: ['file-loader'],
       },
     ],
   },
