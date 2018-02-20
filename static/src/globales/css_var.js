@@ -1,11 +1,3 @@
-const CSS = {
-  padding: '',
-  containerWidth: '',
-  titleFontFamily: '',
-  baseFontFamily: '',
-  backgroundColor: '',
-  radius: '',
-  boxShadow: '',
-};
+const CSS = {};
 
 export default CSS;
